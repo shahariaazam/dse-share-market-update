@@ -32,6 +32,6 @@ class Scraper
     {
         $newData = explode('*', $data);
         $withoutEmptyValue = array_filter($newData, 'strlen');
-        return $withoutEmptyValue;
+        return array_values($withoutEmptyValue);
     }
 }
