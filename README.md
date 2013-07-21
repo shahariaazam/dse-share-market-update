@@ -4,14 +4,12 @@ DSE-Share-Market-Update
 Real time Share Market Update Data of Dhaka Stock Exchange, Bangladesh.
 
 
-Primary Feature
-===================
+### Primary Feature
 
 This project is enough to scrap the latest share market data of Dhaka Stock Exchange and build array to make it flexible for other data format.
 
 
-Usage
-=================
+### Usage
 
 After cloning this Git repo you can use it directly.
 Run `DSE-Share-Market-Update/debug.php`....
@@ -29,8 +27,7 @@ Run `DSE-Share-Market-Update/debug.php`....
 
 The above code is written in `debug.php`. So you can run by yourself easily by copy/page the above code to any file in your root director.
 
-Output
-=================
+### Output
 
 When you will run `debug.php` file then the output should be like the following:
 
@@ -75,16 +72,16 @@ When you will run `debug.php` file then the output should be like the following:
           more elements....
 ```
 
-Intercept of the Element of Array
-==================================
+### Intercept of the Element of Array
+
 `1st element` of the array is `The Trading Code`
 `2nd element` of the array is `Last Trade Price`
 `3rd element` of the array is `Change value`
 `4th element` of the array is `Change in percentage`
 
 
-How to Contribute
-==========================
+### How to Contribute
+
 [Fork](https://github.com/shahariaazam/DSE-Share-Market-Update/fork) this repo and send pull request of your modification.
 
 ### License
