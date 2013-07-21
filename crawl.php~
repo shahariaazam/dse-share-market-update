@@ -1,0 +1,51 @@
+<?
+include("simple_html_dom.php");
+
+$html = file_get_contents("http://stackoverflow.com/search?q=favorite+programmer+cartoon");
+$data['dom'] = $data['simple_dom'] = array();
+
+$timer_start = microtime(true);
+
+$dom = new DOMDocument();
+@$dom->loadHTML($html);
+$x = new DOMXPath($dom); 
+
+foreach($x->query("//a") as $node) 
+{
+     $data['dom'][] = $node->getAttribute("href");
+}
+
+foreach($x->query("//img") as $node) 
+{
+     $data['dom'][] = $node->getAttribute("src");
+}
+
+foreach($x->query("//input") as $node) 
+{
+     $data['dom'][] = $node->getAttribute("name");
+}
+
+$dom_time =  microtime(true) - $timer_start;
+
+echo "built in php DOM : $dom_time\n";
+
+$timer_start = microtime(true);
+$simple_dom = new simple_html_dom();
+$simple_dom->load($html);
+foreach( $simple_dom->find("a") as $node)
+{
+   $data['simple_dom'][] = $node->href;
+}
+
+foreach( $simple_dom->find("img") as $node)
+{
+   $data['simple_dom'][] = $node->src;
+}
+
+foreach( $simple_dom->find("input") as $node)
+{
+   $data['simple_dom'][] = $node->name;
+}
+$simple_dom_time =  microtime(true) - $timer_start;
+
+echo "simple html  DOM : $simple_dom_time\n";
