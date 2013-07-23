@@ -12,7 +12,7 @@ if($requestType == "json")
 {
     header('Content-type: application/json');
     header("Access-Control-Allow-Origin: *");
-    print_r(json_encode($api->getResponse($requestType)));
+    echo $api->getResponse($requestType);
 }else{
     exit;
 }
