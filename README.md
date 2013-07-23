@@ -79,6 +79,16 @@ When you will run `debug.php` file then the output should be like the following:
 `3rd element` of the array is `Change value`
 `4th element` of the array is `Change in percentage`
 
+### Access API to get json formatted data
+
+just use this URL to get data for public use `http://dse-share-update.ap01.aws.af.cm/getData.php?output={format}`. So you can easily integrate
+this data in your apps. In the above link `format` is the output response format i.e `json`. Now we currently provide only `json` data as response type.
+So the final URL will be `http://dse-share-update.ap01.aws.af.cm/getData.php?output=json`
+
+### Support
+
+If you are having any trouble with API or about this apps. Then please write down Issues from https://github.com/shahariaazam/DSE-Share-Market-Update/issues
+or if you need more quick assistance please mail at shaharia.azam@gmail.com
 
 ### How to Contribute
 
