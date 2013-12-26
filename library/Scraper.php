@@ -15,8 +15,7 @@ class Scraper
         $x = new DOMXPath($dom);
 
         foreach ($x->query("//a[contains(concat(' ',normalize-space(@class),' '),' abhead ')]") as $node) {
-            $afterClean = $this->cleanData($node->nodeValue);
-            $array[]    = $this->buildArray($afterClean);
+            $array[] = $this->cleanData($node->nodeValue);
         }
         return $array;
     }
@@ -24,14 +23,13 @@ class Scraper
     protected function cleanData($data = null)
     {
         $data = utf8_decode($data);
-        $string = str_replace(" ", '', $data);
-        return $newData = str_replace("&nbsp;", '*', htmlentities($string));
-    }
+        preg_match_all('([\w-\.]+)', $data, $cleaned);
 
-    protected function buildArray($data = null)
-    {
-        $newData = explode('*', $data);
-        $withoutEmptyValue = array_filter($newData, 'strlen');
-        return array_values($withoutEmptyValue);
+        return $newArray = array(
+            'company' => $cleaned[0][0],
+            'lastTrade' => $cleaned[0][1],
+            'changeAmount' => $cleaned[0][2],
+            'changePercent' => $cleaned[0][3]."%",
+        );
     }
 }
