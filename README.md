@@ -32,44 +32,55 @@ The above code is written in `debug.php`. So you can run by yourself easily by c
 When you will run `debug.php` file then the output should be like the following:
 
 ```php
-    array (size=288)
+    array (size=285)
       0 => 
         array (size=4)
-          0 => string '1JANATAMF' (length=9)
-          1 => string '6.60' (length=4)
-          2 => string '-0.10' (length=5)
-          6 => string '-1.49%' (length=6)
+          'company' => string '1JANATAMF' (length=9)
+          'lastTrade' => string '6.00' (length=4)
+          'changeAmount' => string '0.00' (length=4)
+          'changePercent' => string '0.00%' (length=5)
       1 => 
         array (size=4)
-          0 => string '1STBSRS' (length=7)
-          1 => string '96.00' (length=5)
-          2 => string '-2.50' (length=5)
-          6 => string '-2.54%' (length=6)
+          'company' => string '1STPRIMFMF' (length=10)
+          'lastTrade' => string '26.00' (length=5)
+          'changeAmount' => string '0.20' (length=4)
+          'changePercent' => string '0.78%' (length=5)
       2 => 
         array (size=4)
-          0 => string '1STPRIMFMF' (length=10)
-          1 => string '17.30' (length=5)
-          2 => string '-1.10' (length=5)
-          6 => string '-5.98%' (length=6)
+          'company' => string '3RDICB' (length=6)
+          'lastTrade' => string '190.10' (length=6)
+          'changeAmount' => string '0.00' (length=4)
+          'changePercent' => string '0.00%' (length=5)
       3 => 
         array (size=4)
-          0 => string '2NDICB' (length=6)
-          1 => string '307.00' (length=6)
-          2 => string '-1.10' (length=5)
-          6 => string '-0.36%' (length=6)
+          'company' => string '4THICB' (length=6)
+          'lastTrade' => string '190.00' (length=6)
+          'changeAmount' => string '0.00' (length=4)
+          'changePercent' => string '0.00%' (length=5)
       4 => 
         array (size=4)
-          0 => string '4THICB' (length=6)
-          1 => string '190.10' (length=6)
-          2 => string '-5.50' (length=5)
-          6 => string '-2.81%' (length=6)
+          'company' => string '6THICB' (length=6)
+          'lastTrade' => string '52.10' (length=5)
+          'changeAmount' => string '-0.50' (length=5)
+          'changePercent' => string '-0.95%' (length=6)
       5 => 
         array (size=4)
-          0 => string '5THICB' (length=6)
-          1 => string '180.00' (length=6)
-          2 => string '-6.50' (length=5)
-          6 => string '-3.49%' (length=6)
-          more elements....
+          'company' => string '8THICB' (length=6)
+          'lastTrade' => string '52.20' (length=5)
+          'changeAmount' => string '-0.80' (length=5)
+          'changePercent' => string '-1.51%' (length=6)
+      6 => 
+        array (size=4)
+          'company' => string 'AAMRATECH' (length=9)
+          'lastTrade' => string '37.10' (length=5)
+          'changeAmount' => string '-0.10' (length=5)
+          'changePercent' => string '-0.27%' (length=6)
+      7 => 
+        array (size=4)
+          'company' => string 'ABB1STMF' (length=8)
+          'lastTrade' => string '7.10' (length=4)
+          'changeAmount' => string '0.00' (length=4)
+          'changePercent' => string '0.00%' (length=5)
 ```
 
 ### Intercept of the Element of Array
