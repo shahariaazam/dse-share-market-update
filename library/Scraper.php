@@ -6,7 +6,7 @@ class Scraper
 {
     public function scrapData($url = null)
     {
-        $html = file_get_contents($url);
+        $html = $this->getDataByCurl($url);
 
         $data['dom'] = $data['simple_dom'] = array();
 
@@ -31,5 +31,13 @@ class Scraper
             'changeAmount' => $cleaned[0][2],
             'changePercent' => $cleaned[0][3]."%",
         );
+    }
+
+    protected function getDataByCurl ($url) {
+        $ch = curl_init ($url) ;
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1) ;
+        $res = curl_exec ($ch) ;
+        curl_close ($ch) ;
+        return ($res) ;
     }
 }
