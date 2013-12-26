@@ -30,7 +30,7 @@ function generateJson()
     $time2 = new DateTime(date('Y-m-d h:i:s', filectime('cache/dseData.json')));
     $interval = $time1->diff($time2);
 
-    if ($interval->i > 0) {
+    if ($interval->i > 0 || file_exists('cache/dseData.json') === false) {
         unlink('cache/dseData.json');
         $api = new Request();
         saveCache('cache', "dseData.json", $api->getResponse('json'));
