@@ -1,4 +1,4 @@
-## Bangladesh Stock Exchange Pricing
+## Bangladesh Stock Exchange
 
 This PHP library provides a simple way to get and parse the stock price for Dhaka Stock Exchange in real time directly
 from the official DSE website (https://www.dsebd.org)
@@ -8,7 +8,7 @@ from the official DSE website (https://www.dsebd.org)
 
 Install this library via `composer` by running the following command
 
-`composer require shahariaazam/bd-stock-exchange-price`
+`composer require shahariaazam/bd-stock-exchange`
 
 
 Note: This library has been upgraded from it's old (legacy) code and made it as a standard library.

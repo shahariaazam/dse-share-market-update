@@ -1,5 +1,5 @@
 {
-    "name": "shahariaazam/bd-stock-exchange-price",
+    "name": "shahariaazam/bd-stock-exchange",
     "description": "Bangladeshi stock exchange (share market) stock price data fetch with PHP",
     "type": "library",
     "license": "MIT",

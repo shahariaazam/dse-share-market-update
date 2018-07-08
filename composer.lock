@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "708d6b188f7dff560a3c8b2c7156db25",
+    "content-hash": "6345a6cf2d43ee3bb0a2b111c0ed25b9",
     "packages": [
         {
             "name": "sunra/php-simple-html-dom-parser",
