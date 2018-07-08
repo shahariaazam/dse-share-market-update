@@ -12,8 +12,9 @@ Install this library via `composer` by running the following command
 
 
 Note: This library has been upgraded from it's old (legacy) code and made it as a standard library.
-if you still want to use legacy (OLD) codes, you can find that from [https://github.com/shahariaazam/DSE-Share-Market-Update/tree/old-legacy-codes](https://github.com/shahariaazam/DSE-Share-Market-Update/tree/old-legacy-codes).
+if you still want to use legacy (OLD) codes, you can find that in [old-legacy-codes](https://github.com/shahariaazam/DSE-Share-Market-Update/tree/old-legacy-codes) branch.
 
+Or you can download OLD codes as `zip`. [Click here](https://github.com/shahariaazam/DSE-Share-Market-Update/raw/old-legacy-codes/dse.zip) to download old codes.
 
 
 ### Usage
