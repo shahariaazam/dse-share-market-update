@@ -1,6 +1,6 @@
 <?php
 
-namespace Shaharia\BDStockExchange\StockPrice;
+namespace ShahariaAzam\BDStockExchange\StockPrice;
 
 
 use DOMDocument;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Shaharia\BDStockExchange;
+namespace ShahariaAzam\BDStockExchange;
 
 
-use Shaharia\BDStockExchange\StockPrice\DSE;
+use ShahariaAzam\BDStockExchange\StockPrice\DSE;
 
 class StockPrice
 {
