@@ -4,7 +4,7 @@ include ("library/Scraper.php");
 
 class Request
 {
-    public $url = "http://www.dsebd.org";
+    public $url = "https://www.dsebd.org";
 
     public function getRequest($source = null, $key = null, $outputResponse = null)
     {

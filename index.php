@@ -49,7 +49,7 @@
     include(&quot;library/Scraper.php&quot;);
 
     $scraper = new Scraper();
-    $scrapData = $scraper-&gt;scrapData('http://www.dsebd.org');
+    $scrapData = $scraper-&gt;scrapData('https://www.dsebd.org');
 
     var_dump($scrapData);
 </code></pre>

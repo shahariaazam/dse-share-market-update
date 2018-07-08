@@ -20,7 +20,7 @@ Run `DSE-Share-Market-Update/debug.php`....
     include("library/Scraper.php");
     
     $scraper = new Scraper();
-    $scrapData = $scraper->scrapData('http://www.dsebd.org');
+    $scrapData = $scraper->scrapData('https://www.dsebd.org');
     
     var_dump($scrapData);
 ```
