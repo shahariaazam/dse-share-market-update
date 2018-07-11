@@ -26,7 +26,7 @@ After installing you can simply get the latest Dhaka Stock Exchange price data
 
 require "vendor/autoload.php";
 
-$dse = new \Shaharia\BDStockExchange\StockPrice();
+$dse = new \ShahariaAzam\BDStockExchange\StockPrice();
 var_dump($dse->getDSEPricing());
 ```
 
