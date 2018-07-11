@@ -1,3 +1,5 @@
+![Get Realtime Trade Price for Dhaka Stock Exchange in PHP](http://imgwww.priyo.com/files/story/201408/dse_5.jpg)
+
 ## Bangladesh Stock Exchange
 
 This PHP library provides a simple way to get and parse the stock price for Dhaka Stock Exchange in real time directly
