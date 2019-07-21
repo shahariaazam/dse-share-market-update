@@ -13,6 +13,7 @@ class DSE
      * @var string
      */
     protected $sourceUrl = "https://www.dsebd.org";
+    protected $curlUserAgent = "Shaharia's Tools - Make life easier everyday";
 
     /**
      * @var array
@@ -24,7 +25,7 @@ class DSE
      */
     public function getPricing()
     {
-        $html = HtmlDomParser::file_get_html($this->sourceUrl);
+        $html = HtmlDomParser::str_get_html($this->getWebpage());
 
         $data['dom'] = $data['simple_dom'] = array();
 
@@ -53,5 +54,25 @@ class DSE
             'changeAmount' => $cleaned[0][2],
             'changePercent' => $cleaned[0][3]."%",
         );
+    }
+
+    /**
+     * @param array $options
+     * @return bool|string
+     *
+     * @TODO need to check any error on HTTP request
+     */
+    protected function getWebpage(array $options = [])
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => $this->sourceUrl,
+            CURLOPT_USERAGENT => $this->curlUserAgent
+        ]);
+        $resp = curl_exec($curl);
+        curl_close($curl);
+
+        return $resp;
     }
 }
