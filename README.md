@@ -23,6 +23,7 @@ Or you can download OLD codes as `zip`. [Click here](https://github.com/shaharia
 
 After installing you can simply get the latest Dhaka Stock Exchange price data
 
+####Dhaka Stock Exchnage
 ```php
 <?php
 
@@ -68,6 +69,33 @@ array(339) {
     string(5) "-2.50"
     'changePercent' =>
     string(6) "-3.22%"
+  }
+```
+
+####Chittagong Stock Exchange
+```php
+<?php
+
+require "vendor/autoload.php";
+
+$dse = new \ShahariaAzam\BDStockExchange\StockPrice();
+var_dump($dse->getCSEPricing());
+```
+
+And you are done. You will get the following output
+
+```
+array(339) {
+  [0] =>
+  array(4) {
+    'company' =>
+    string(9) "1JANATAMF"
+    'lastTrade' =>
+    string(4) "6.10"
+    'yesterday_closing' =>
+    string(5) "5.60"
+    'changeAmount' =>
+    string(6) "0.4%"
   }
 ```
 

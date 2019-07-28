@@ -3,6 +3,7 @@
 namespace ShahariaAzam\BDStockExchange;
 
 
+use ShahariaAzam\BDStockExchange\StockPrice\CSE;
 use ShahariaAzam\BDStockExchange\StockPrice\DSE;
 
 class StockPrice
@@ -25,5 +26,14 @@ class StockPrice
     public function getDSEPricing()
     {
         return (new DSE())->getPricing();
+    }
+
+    /**
+     * Get stock pricing data from Chittagong Stock Exchange
+     * @return array
+     */
+    public function getCSEPricing()
+    {
+        return (new CSE())->getPricing();
     }
 }
