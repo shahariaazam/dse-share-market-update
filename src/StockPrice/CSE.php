@@ -54,6 +54,8 @@ class CSE
         return $newArray = array(
             'company' => $cleaned[0][1],
             'lastTrade' => $cleaned[0][2],
+            'high_price' => $cleaned[0][4],
+            'low_price' => $cleaned[0][5],
             'yesterday_closing' => $cleaned[0][6],
             'changeAmount' => $cleaned[0][6] - $cleaned[0][2]
             //'changeAmount' => $cleaned[0][6] - $cleaned[0][2],

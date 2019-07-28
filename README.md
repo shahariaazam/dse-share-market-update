@@ -92,6 +92,10 @@ array(339) {
     string(9) "1JANATAMF"
     'lastTrade' =>
     string(4) "6.10"
+    'high_price' =>
+    string(4) "6.10"
+    'low_price' =>
+    string(4) "6.10"
     'yesterday_closing' =>
     string(5) "5.60"
     'changeAmount' =>
