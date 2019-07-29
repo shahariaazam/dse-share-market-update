@@ -23,7 +23,7 @@ Or you can download OLD codes as `zip`. [Click here](https://github.com/shaharia
 
 After installing you can simply get the latest Dhaka Stock Exchange price data
 
-####Dhaka Stock Exchnage
+#### Dhaka Stock Exchnage
 ```php
 <?php
 
@@ -72,7 +72,7 @@ array(339) {
   }
 ```
 
-####Chittagong Stock Exchange
+#### Chittagong Stock Exchange
 ```php
 <?php
 
@@ -131,4 +131,4 @@ Social:
 [LinkedIn](https://bd.linkedin.com/in/shaharia) | [Twitter](https://twitter.com/shaharia) | [Facebook](https://facebook.com/shahariaazamweb)
 
 Website:
-[blog.shaharia.com](https://blog.shaharia.com) | [shaharia.com](https://www.shaharia.com)
+[blog.shaharia.com](https://blog.shaharia.com/get-bangladesh-stock-market-dse-cse-share-price-in-php) | [shaharia.com](https://www.shaharia.com)
