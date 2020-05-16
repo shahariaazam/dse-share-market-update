@@ -49,7 +49,7 @@ class CSE
     protected function cleanData($data = null)
     {
         $data = utf8_decode($data);
-        preg_match_all('([\w-\.]+)', $data, $cleaned);
+        preg_match_all('([\w!\d+(?:\.\d+)?!]+)', $data, $cleaned);
 
         return $newArray = array(
             'company' => $cleaned[0][1],
