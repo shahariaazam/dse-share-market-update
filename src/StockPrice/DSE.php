@@ -6,6 +6,7 @@ namespace ShahariaAzam\BDStockExchange\StockPrice;
 use DOMDocument;
 use DOMXPath;
 use Sunra\PhpSimple\HtmlDomParser;
+use Symfony\Component\DomCrawler\Crawler;
 
 class DSE
 {
@@ -25,15 +26,9 @@ class DSE
      */
     public function getPricing()
     {
-        $html = HtmlDomParser::str_get_html($this->getWebpage());
+        $dom = new Crawler($this->getWebpage());
 
-        $data['dom'] = $data['simple_dom'] = array();
-
-        $dom = new DOMDocument();
-        @$dom->loadHTML($html);
-        $x = new DOMXPath($dom);
-
-        foreach ($x->query("//a[contains(concat(' ',normalize-space(@class),' '),' abhead ')]") as $node) {
+        foreach ($dom->filterXPath("//a[contains(concat(' ',normalize-space(@class),' '),' abhead ')]") as $node) {
             $array[] = $this->cleanData($node->nodeValue);
         }
         return $array;

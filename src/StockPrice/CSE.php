@@ -2,10 +2,7 @@
 
 namespace ShahariaAzam\BDStockExchange\StockPrice;
 
-
-use DOMDocument;
-use DOMXPath;
-use Sunra\PhpSimple\HtmlDomParser;
+use Symfony\Component\DomCrawler\Crawler;
 
 class CSE
 {
@@ -25,15 +22,9 @@ class CSE
      */
     public function getPricing()
     {
-        $html = HtmlDomParser::str_get_html($this->getWebpage());
+        $dom = new Crawler($this->getWebpage());
 
-        $data['dom'] = $data['simple_dom'] = array();
-
-        $dom = new DOMDocument();
-        @$dom->loadHTML($html);
-        $x = new DOMXPath($dom);
-
-        $stockDom = $x->query("//*[@id=\"dataTable\"]/tbody/tr");
+        $stockDom = $dom->filterXPath("//*[@id=\"dataTable\"]/tbody/tr");
 
         foreach ($stockDom as $node){
             $array[] = $this->cleanData($node->nodeValue);
@@ -57,7 +48,7 @@ class CSE
             'high_price' => $cleaned[0][4],
             'low_price' => $cleaned[0][5],
             'yesterday_closing' => $cleaned[0][6],
-            'changeAmount' => $cleaned[0][6] - $cleaned[0][2]
+            'changeAmount' => (float) $cleaned[0][6] - (float) $cleaned[0][2]
             //'changeAmount' => $cleaned[0][6] - $cleaned[0][2],
             //'changePercent' => ((($cleaned[0][6] - $cleaned[0][2])/$cleaned[0][6])*100)."%",
         );
