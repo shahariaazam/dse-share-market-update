@@ -27,6 +27,8 @@ namespace ShahariaAzam\BDStockExchange;
 
 use Nyholm\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
+use ShahariaAzam\BDStockExchange\StockExchange\ChittagongStockExchange;
+use ShahariaAzam\BDStockExchange\StockExchange\DhakaStockExchange;
 use Symfony\Component\HttpClient\Psr18Client;
 
 class StockPrice
@@ -148,6 +150,32 @@ class StockPrice
             $this->fetch();
         }
 
+        return $this->stockExchange->toArray();
+    }
+
+    /**
+     * This method is only to maintain backward compatibility
+     *
+     * @deprecated Try to follow README for updated usage instruction. This method will be removed in next major release
+     */
+    public function getDSEPricing()
+    {
+        $this->setStockExchange(new DhakaStockExchange());
+        $this->stockExchange->setHttpClient($this->httpClient)
+            ->fetchStockPrices();
+        return $this->stockExchange->toArray();
+    }
+
+    /**
+     * This method is only to maintain backward compatibility
+     *
+     * @deprecated Try to follow README for updated usage instruction. This method will be removed in next major release
+     */
+    public function getCSEPricing()
+    {
+        $this->setStockExchange(new ChittagongStockExchange());
+        $this->stockExchange->setHttpClient($this->httpClient)
+            ->fetchStockPrices();
         return $this->stockExchange->toArray();
     }
 }
