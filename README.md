@@ -44,23 +44,28 @@ $dse = new DhakaStockExchange();    // For Dhaka Stock Exchange
 
 $stock = new StockPrice();
 $stock->setStockExchange($dse);
-var_dump($stock->getPricing()->toArray());
+var_dump($stock->getPricing());     // Return PricingEntity[]
+var_dump($stock->toArray());        // Return as array
 ```
 
-And you are done. You will get the following output
+And you are done. You will get the following output. Array of `PricingEntity`
 
 ```
 array(350) {
   [0] =>
-  array(6) {
-    'company' =>
+  class ShahariaAzam\BDStockExchange\PricingEntity#20 (6) {
+    private $company =>
     string(9) "1JANATAMF"
-    'lastTradeValue' =>
+    private $lastTradeValue =>
     double(4.1)
-    'changeInAmount' =>
+    private $changeInAmount =>
     double(0)
-    'changeInPercentage' =>
+    private $changeInPercentage =>
     double(0)
+    private $highPrice =>
+    NULL
+    private $lowPrice =>
+    NULL
   }
 ```
 
