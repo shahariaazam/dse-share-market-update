@@ -35,6 +35,10 @@ jobs:
 
       # PHP CS check
       - name: Run PHP Coding Standard Checking
+        run: ./vendor/bin/phpcs
+
+      # PHP CS fixer check
+      - name: Run PHP Coding Standard Checking
         run: ./vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no --path-mode=intersection
 
       # Unit Testing
