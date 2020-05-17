@@ -42,7 +42,7 @@ class ChittagongStockExchange implements StockExchangeInterface
     {
         $request = new Request('GET', $this->endpoint);
         $response = $this->httpClient->sendRequest($request);
-        $dom = new Crawler($response->getBody()->getContents());
+        $dom = new Crawler((string) $response->getBody());
 
         $stockDom = $dom->filterXPath("//*[@id=\"dataTable\"]/tbody/tr");
 
