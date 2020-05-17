@@ -1,0 +1,7 @@
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PSR2" xsi:noNamespaceSchemaLocation="./vendor/squizlabs/php_codesniffer/phpcs.xsd">
+    <description>Coding standard.</description>
+
+    <file>src/</file>
+
+    <rule ref="PSR2"/>
+</ruleset>
