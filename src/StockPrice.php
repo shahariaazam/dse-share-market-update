@@ -2,6 +2,7 @@
 
 namespace ShahariaAzam\BDStockExchange;
 
+use Nyholm\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\HttpClient\Psr18Client;
 
@@ -21,6 +22,11 @@ class StockPrice
      * @var StockExchangeInterface
      */
     private $stockExchange;
+
+    /**
+     * @var PricingEntity[]
+     */
+    private $pricing;
 
     public function __construct()
     {
@@ -83,12 +89,42 @@ class StockPrice
     }
 
     /**
-     * @return StockExchangeInterface
+     * @return StockPrice
+     * @throws StockExceptions
+     */
+    public function fetch()
+    {
+        if (empty($this->stockExchange->getPricing())) {
+            $this->stockExchange->setHttpClient($this->httpClient)
+                ->fetchStockPrices();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return PricingEntity[]
      * @throws StockExceptions
      */
     public function getPricing()
     {
-        return $this->stockExchange->setHttpClient($this->httpClient)
-            ->fetchStockPrices();
+        if (empty($this->stockExchange->getPricing())) {
+            $this->fetch();
+        }
+        
+        return $this->stockExchange->getPricing();
+    }
+
+    /**
+     * @return array
+     * @throws StockExceptions
+     */
+    public function toArray()
+    {
+        if (empty($this->stockExchange->getPricing())) {
+            $this->fetch();
+        }
+
+        return $this->stockExchange->toArray();
     }
 }

@@ -39,6 +39,7 @@ class DhakaStockExchange implements StockExchangeInterface
     public function __construct()
     {
         $this->endpoint = 'https://www.dsebd.org';
+        $this->pricing = [];
     }
 
     /**
@@ -48,7 +49,7 @@ class DhakaStockExchange implements StockExchangeInterface
     {
         $request = new Request('GET', $this->endpoint);
         $response = $this->httpClient->sendRequest($request);
-        $dom = new Crawler($response->getBody()->getContents());
+        $dom = new Crawler((string) $response->getBody());
 
         foreach ($dom->filterXPath("//a[contains(concat(' ',normalize-space(@class),' '),' abhead ')]") as $node) {
             $this->pricing[] = $this->cleanData($node->nodeValue);
