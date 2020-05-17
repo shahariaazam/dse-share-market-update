@@ -30,7 +30,9 @@ use Psr\Http\Client\ClientInterface;
 interface StockExchangeInterface
 {
     /**
-     * @param ClientInterface $client
+     * Set PSR-18 compatible HTTP client
+     *
+     * @param ClientInterface $client   // PSR-18 compatible client
      * @return StockExchangeInterface
      */
     public function setHttpClient(ClientInterface $client);
