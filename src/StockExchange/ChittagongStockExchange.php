@@ -81,11 +81,11 @@ class ChittagongStockExchange implements StockExchangeInterface
 
     public function toArray()
     {
-        if(count($this->pricing) < 1){
+        if (count($this->pricing) < 1) {
             return [];
         }
 
-        return array_map(function (PricingEntity $entity){
+        return array_map(function (PricingEntity $entity) {
             return $entity->toArray();
         }, $this->pricing);
     }
