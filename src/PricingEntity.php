@@ -95,9 +95,9 @@ class PricingEntity
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getChangeInPercentage(): float
+    public function getChangeInPercentage()
     {
         return $this->changeInPercentage;
     }
