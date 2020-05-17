@@ -2,38 +2,93 @@
 
 namespace ShahariaAzam\BDStockExchange;
 
-
-use ShahariaAzam\BDStockExchange\StockPrice\CSE;
-use ShahariaAzam\BDStockExchange\StockPrice\DSE;
+use Psr\Http\Client\ClientInterface;
+use Symfony\Component\HttpClient\Psr18Client;
 
 class StockPrice
 {
     /**
-     * StockPrice constructor.
-     * @throws \Exception
+     * @var ClientInterface
      */
+    private $httpClient;
+
+    /**
+     * @var array
+     */
+    private $httpHeaders;
+
+    /**
+     * @var StockExchangeInterface
+     */
+    private $stockExchange;
+
     public function __construct()
     {
-        //Check whether cURL is enabled
-        if(!function_exists('curl_version')){
-            throw new \Exception("cURL is not enabled in your server.");
-        }
+        $this->httpHeaders = [];
+        $this->httpClient = new Psr18Client();
+    }
+
+    /**
+     * @return ClientInterface
+     */
+    public function getHttpClient(): ClientInterface
+    {
+        return $this->httpClient;
+    }
+
+    /**
+     * @param ClientInterface $httpClient
+     * @return StockPrice
+     */
+    public function setHttpClient(ClientInterface $httpClient): StockPrice
+    {
+        $this->httpClient = $httpClient;
+        return $this;
     }
 
     /**
      * @return array
      */
-    public function getDSEPricing()
+    public function getHttpHeaders(): array
     {
-        return (new DSE())->getPricing();
+        return $this->httpHeaders;
     }
 
     /**
-     * Get stock pricing data from Chittagong Stock Exchange
-     * @return array
+     * @param array $httpHeaders
+     * @return StockPrice
      */
-    public function getCSEPricing()
+    public function setHttpHeaders(array $httpHeaders): StockPrice
     {
-        return (new CSE())->getPricing();
+        $this->httpHeaders = $httpHeaders;
+        return $this;
+    }
+
+    /**
+     * @return StockExchangeInterface
+     */
+    public function getStockExchange(): StockExchangeInterface
+    {
+        return $this->stockExchange;
+    }
+
+    /**
+     * @param StockExchangeInterface $stockExchange
+     * @return StockPrice
+     */
+    public function setStockExchange(StockExchangeInterface $stockExchange): StockPrice
+    {
+        $this->stockExchange = $stockExchange;
+        return $this;
+    }
+
+    /**
+     * @return StockExchangeInterface
+     * @throws StockExceptions
+     */
+    public function getPricing()
+    {
+        return $this->stockExchange->setHttpClient($this->httpClient)
+            ->fetchStockPrices();
     }
 }
