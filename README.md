@@ -1,10 +1,16 @@
-![Get Realtime Trade Price for Dhaka Stock Exchange in PHP](http://imgwww.priyo.com/files/story/201408/dse_5.jpg)
+
+![Code Checks](https://github.com/shahariaazam/DSE-Share-Market-Update/workflows/Code-Checks/badge.svg)
+![Build](https://scrutinizer-ci.com/g/shahariaazam/DSE-Share-Market-Update/badges/build.png?b=master)
+![Code Coverage](https://scrutinizer-ci.com/g/shahariaazam/DSE-Share-Market-Update/badges/coverage.png?b=master)
+![Code Rating](https://scrutinizer-ci.com/g/shahariaazam/DSE-Share-Market-Update/badges/quality-score.png?b=master)
+![Code Intellegence](https://scrutinizer-ci.com/g/shahariaazam/DSE-Share-Market-Update/badges/code-intelligence.svg?b=master)
+
+![Dhaka Stock Exchange & Chittagong Stock Exchange Pricing Data Library in PHP](https://i.imgur.com/ilr49U7.jpg)
 
 ## Bangladesh Stock Exchange
 
-This PHP library provides a simple way to get and parse the stock price for Dhaka Stock Exchange in real time directly
-from the official DSE website (https://www.dsebd.org)
-
+This PHP library provides a simple way to get and parse the stock price for [Dhaka Stock Exchange](https://www.dsebd.org) & [Chittagong Stock Exchange](https://www.cse.com.bd/) in real time directly
+from the official website.
 
 ### Installation
 
@@ -23,86 +29,45 @@ Or you can download OLD codes as `zip`. [Click here](https://github.com/shaharia
 
 After installing you can simply get the latest Dhaka Stock Exchange price data
 
-#### Dhaka Stock Exchnage
+#### Get Bangladeshi Stock Exchange Share Price
 ```php
 <?php
 
-require "vendor/autoload.php";
-
-$dse = new \ShahariaAzam\BDStockExchange\StockPrice();
-var_dump($dse->getDSEPricing());
-```
-
-And you are done. You will get the following output
-
-```
-array(339) {
-  [0] =>
-  array(4) {
-    'company' =>
-    string(9) "1JANATAMF"
-    'lastTrade' =>
-    string(4) "6.10"
-    'changeAmount' =>
-    string(5) "-0.10"
-    'changePercent' =>
-    string(6) "-1.61%"
-  }
-  [1] =>
-  array(4) {
-    'company' =>
-    string(10) "1STPRIMFMF"
-    'lastTrade' =>
-    string(5) "12.10"
-    'changeAmount' =>
-    string(4) "0.20"
-    'changePercent' =>
-    string(5) "1.68%"
-  }
-  [2] =>
-  array(4) {
-    'company' =>
-    string(8) "AAMRANET"
-    'lastTrade' =>
-    string(5) "75.10"
-    'changeAmount' =>
-    string(5) "-2.50"
-    'changePercent' =>
-    string(6) "-3.22%"
-  }
-```
-
-#### Chittagong Stock Exchange
-```php
-<?php
+use ShahariaAzam\BDStockExchange\StockExchange\ChittagongStockExchange;
+use ShahariaAzam\BDStockExchange\StockExchange\DhakaStockExchange;
+use ShahariaAzam\BDStockExchange\StockPrice;
 
 require "vendor/autoload.php";
 
-$dse = new \ShahariaAzam\BDStockExchange\StockPrice();
-var_dump($dse->getCSEPricing());
+$dse = new DhakaStockExchange();    // For Dhaka Stock Exchange
+// $cse = new ChittagongStockExchange();    // For Chittagong Stock Exchange
+
+$stock = new StockPrice();
+$stock->setStockExchange($dse);
+var_dump($stock->getPricing());     // Return PricingEntity[]
+var_dump($stock->toArray());        // Return as array
 ```
 
-And you are done. You will get the following output
+And you are done. You will get the following output. Array of `PricingEntity`
 
 ```
-array(339) {
+array(350) {
   [0] =>
-  array(4) {
-    'company' =>
+  class ShahariaAzam\BDStockExchange\PricingEntity#20 (6) {
+    private $company =>
     string(9) "1JANATAMF"
-    'lastTrade' =>
-    string(4) "6.10"
-    'high_price' =>
-    string(4) "6.10"
-    'low_price' =>
-    string(4) "6.10"
-    'yesterday_closing' =>
-    string(5) "5.60"
-    'changeAmount' =>
-    string(6) "0.4%"
+    private $lastTradeValue =>
+    double(4.1)
+    private $changeInAmount =>
+    double(0)
+    private $changeInPercentage =>
+    double(0)
+    private $highPrice =>
+    NULL
+    private $lowPrice =>
+    NULL
   }
 ```
-
 
 ### Contribution
 
