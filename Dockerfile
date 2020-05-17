@@ -1,15 +1,16 @@
-FROM php:7.2-alpine
+# Minimal base image for PHP7.2
+FROM php:7.2-cli-alpine
 
-RUN set -xe \
-    && apk add --no-cache --update --virtual .phpize-deps $PHPIZE_DEPS \
-    && apk add git \
-    && rm -rf /usr/share/php \
-    && rm -rf /tmp/* \
-    && apk del  .phpize-deps
+# Copy source codes
+COPY . /usr/src/bd-stock-price
 
-RUN git clone -b development https://github.com/shahariaazam/DSE-Share-Market-Update.git /usr/src/bd-stock-exchange
+# Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
-WORKDIR /usr/src/bd-stock-exchange
+WORKDIR /usr/src/bd-stock-price
 
+# Install composer dependencies
 RUN composer install --no-dev
+
+# Set execution permission to ./bin/stock
+RUN chmod a+x ./bin/stock
