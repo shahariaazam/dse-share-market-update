@@ -127,7 +127,7 @@ class DhakaStockExchange implements StockExchangeInterface
     protected function cleanData($data)
     {
         $data = utf8_decode($data);
-        preg_match_all('([\w!\d+(?:\.\d+)?!]+)', $data, $cleaned);
+        preg_match_all('([\w!\d+(?:.\d+)?!]+)', $data, $cleaned);
 
         $pricingData = array_pop($cleaned);
 

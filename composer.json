@@ -32,6 +32,11 @@
             "ShahariaAzam\\BDStockExchange\\Tests\\": "tests/src"
         }
     },
+    "scripts": {
+        "phpunit": "./vendor/bin/phpunit --configuration ./phpunit.xml --bootstrap ./tests/bootstrap.php",
+        "phpcs": "./vendor/bin/phpcs",
+        "php-cs-fixer": "./vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no --path-mode=intersection"
+    },
     "suggest": {
         "php-http/curl-client": "cURL client for PHP-HTTP",
         "guzzlehttp/psr7": "PSR-7 message implementation that also provides common utility methods"
