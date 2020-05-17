@@ -1,0 +1,96 @@
+#!/usr/bin/env php
+
+<?php
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2020 Shaharia Azam <mail@shaharia.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+use ShahariaAzam\BDStockExchange\StockExchange\ChittagongStockExchange;
+use ShahariaAzam\BDStockExchange\StockExchange\DhakaStockExchange;
+use ShahariaAzam\BDStockExchange\StockPrice;
+
+require dirname(__DIR__) . DIRECTORY_SEPARATOR . "vendor/autoload.php";
+
+/**
+ * Get all the options
+ *
+ * Reference: https://stackoverflow.com/a/61259106/1431786
+ *
+ * @return array
+ */
+function get_opts()
+{
+    $opts = array();
+    foreach ($_SERVER["argv"] as $k => $a) {
+        if (preg_match('@\-\-(.+)=(.+)@', $a, $m)) {
+            $opts[$m[1]] = $m[2];
+        } elseif (preg_match('@\-\-(.+)@', $a, $m)) {
+            $opts[$m[1]] = true;
+        } elseif (preg_match('@\-(.+)=(.+)@', $a, $m)) {
+            $opts[$m[1]] = $m[2];
+        } elseif (preg_match('@\-(.+)@', $a, $m)) {
+            $opts[$m[1]] = true;
+        } else {
+            $opts[$k] = $a;
+        }
+    }
+    return $opts;
+}
+
+$options = get_opts();
+
+if (count($options) < 2) {
+    exit("No parameter provided"  .PHP_EOL);
+}
+
+$market = $options[1];
+if (!in_array($market, ['dse', 'cse'])) {
+    exit("Accepted arguments are: dse, cse"  .PHP_EOL);
+}
+
+$stockPrice = new StockPrice();
+
+if ($market === "dse") {
+    $stockPrice->setStockExchange(new DhakaStockExchange());
+} elseif ($market === "cse") {
+    $stockPrice->setStockExchange(new ChittagongStockExchange());
+}
+
+if (isset($options['json']) && $options['json'] === true) {
+    echo json_encode($stockPrice->toArray(), JSON_PRETTY_PRINT);
+    exit(0);
+} elseif (isset($options['line']) && $options['line'] === true) {
+    foreach ($stockPrice->getPricing() as $pricingEntity) {
+        echo sprintf(
+            "%s\t\t%s\t%s\t%s",
+            $pricingEntity->getCompany(),
+            $pricingEntity->getLastTradeValue(),
+            $pricingEntity->getChangeInAmount(),
+            $pricingEntity->getChangeInPercentage()
+        ) . PHP_EOL;
+    }
+    exit(0);
+}else{
+    echo json_encode($stockPrice->toArray(), JSON_PRETTY_PRINT);
+    exit(0);
+}

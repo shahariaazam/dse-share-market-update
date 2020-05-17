@@ -69,6 +69,30 @@ array(350) {
   }
 ```
 
+### Docker Image
+
+You can also use Docker. To use Docker, you can find the image on [Docker Hub](https://hub.docker.com/r/shaharia/bd-stock-price) or you can build Docker image
+from this repo.
+
+To get the latest Bangladeshi Stock Market price via Docker, run the following command -
+
+```bash
+docker run -it --rm shaharia/bd-stock-price:latest php bin/stock dse --json
+```
+
+```
+dse = Dhaka Stock Exchange
+cse = Chittagong Stock Exchange
+--json = Display in a JSON format
+--line = Display as new line for each stock
+```
+
+If you want to build your own Docker image, run -
+
+```bash
+docker build . --tag IMAGE:TAG
+```
+
 ### Contribution
 
 This is a helpful PHP library for programmers who want to get the latest Bangladesh stock exchange market data 
