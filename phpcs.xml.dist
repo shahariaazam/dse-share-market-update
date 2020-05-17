@@ -1,0 +1,23 @@
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PSR2" xsi:noNamespaceSchemaLocation="./vendor/squizlabs/php_codesniffer/phpcs.xsd">
+    <description>Coding standard.</description>
+
+    <config name="installed_paths" value="vendor/phpcompatibility/php-compatibility" />
+
+    <file>src/</file>
+
+    <rule ref="PSR2"/>
+
+    <!-- Ban some functions -->
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="var_dump" value=""/>
+                <element key="die" value=""/>
+            </property>
+        </properties>
+    </rule>
+
+    <config name="testVersion" value="7.2-"/>
+    <rule ref="PHPCompatibility"/>
+
+</ruleset>
