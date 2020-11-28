@@ -35,7 +35,7 @@ jobs:
 
       # PHP CS check
       - name: Run PHP Coding Standard Checking
-        run: ./vendor/bin/phpcs
+        run: ./vendor/bin/phpcs --runtime-set php ${{ matrix.php-versions }}
 
       # PHP CS fixer check
       - name: Run PHP Coding Standard Checking

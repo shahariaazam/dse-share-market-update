@@ -36,7 +36,7 @@
     },
     "scripts": {
         "phpunit": "./vendor/bin/phpunit --configuration ./phpunit.xml --bootstrap ./tests/bootstrap.php",
-        "phpcs": "./vendor/bin/phpcs",
+        "phpcs": "./vendor/bin/phpcs --runtime-set php 7.2",
         "php-cs-fixer": "./vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no --path-mode=intersection"
     },
     "suggest": {
