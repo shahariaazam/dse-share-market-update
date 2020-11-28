@@ -30,5 +30,5 @@ interface StockExchangeInterface
     /**
      * @return PricingEntity[]
      */
-    public function getPricing();
+    public function getPricing(): array;
 }

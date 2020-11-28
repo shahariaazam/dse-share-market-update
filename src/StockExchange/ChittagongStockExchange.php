@@ -36,7 +36,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ChittagongStockExchange implements StockExchangeInterface
 {
-    const PRICING_HTTP_ENDPOINT = 'https://www.dsebd.org';
+    const PRICING_HTTP_ENDPOINT = 'https://www.cse.com.bd/market/current_price';
 
     /**
      * @var ClientInterface
@@ -63,7 +63,7 @@ class ChittagongStockExchange implements StockExchangeInterface
         $response = $this->httpClient->sendRequest(
             new Request('GET', self::PRICING_HTTP_ENDPOINT)
         );
-        $dom = new Crawler((string)$response->getBody());
+        $dom = new Crawler((string) $response->getBody());
 
         $stockDom = $dom->filterXPath("//*[@id=\"dataTable\"]/tbody/tr");
 

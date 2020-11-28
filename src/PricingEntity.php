@@ -39,7 +39,7 @@ class PricingEntity
     private $company;
 
     /**
-     * @var float
+     * @var string
      */
     private $lastTradeValue;
 
@@ -98,10 +98,10 @@ class PricingEntity
     }
 
     /**
-     * @param float $lastTradeValue
+     * @param string $lastTradeValue
      * @return PricingEntity
      */
-    public function setLastTradeValue(float $lastTradeValue): self
+    public function setLastTradeValue(string $lastTradeValue): self
     {
         $this->lastTradeValue = $lastTradeValue;
         return $this;

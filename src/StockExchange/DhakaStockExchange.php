@@ -58,7 +58,7 @@ class DhakaStockExchange implements StockExchangeInterface
      * @return PricingEntity[]
      * @throws ClientExceptionInterface
      */
-    public function getPricing()
+    public function getPricing(): array
     {
         $response = $this->httpClient->sendRequest(
             new Request('GET', self::PRICING_HTTP_ENDPOINT)
@@ -89,7 +89,7 @@ class DhakaStockExchange implements StockExchangeInterface
         $pricingEntity->setCompany((string) $pricingData[0]);
 
         if (isset($pricingData[1])) {
-            $pricingEntity->setLastTradeValue((float) $pricingData[1]);
+            $pricingEntity->setLastTradeValue(number_format((float) $pricingData[1], 2));
         }
 
         if (isset($pricingData[2])) {
