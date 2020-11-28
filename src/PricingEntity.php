@@ -23,15 +23,14 @@
  * THE SOFTWARE.
  */
 
-/**
- * PricingEntity class
- *
- * @package  ShahariaAzam\BDStockExchange
- */
-
+declare(strict_types=1);
 
 namespace ShahariaAzam\BDStockExchange;
 
+/**
+ * Class PricingEntity
+ * @package ShahariaAzam\BDStockExchange
+ */
 class PricingEntity
 {
     /**
@@ -45,12 +44,12 @@ class PricingEntity
     private $lastTradeValue;
 
     /**
-     * @var float
+     * @var float|null
      */
     private $changeInAmount;
 
     /**
-     * @var float
+     * @var float|null
      */
     private $changeInPercentage;
 
@@ -64,6 +63,14 @@ class PricingEntity
      */
     private $lowPrice;
 
+    public function __construct()
+    {
+        $this->changeInAmount = null;
+        $this->changeInPercentage = null;
+        $this->highPrice = null;
+        $this->lowPrice = null;
+    }
+
     /**
      * @return string
      */
@@ -76,7 +83,7 @@ class PricingEntity
      * @param string $company
      * @return PricingEntity
      */
-    public function setCompany(string $company): PricingEntity
+    public function setCompany(string $company): self
     {
         $this->company = $company;
         return $this;
@@ -94,16 +101,16 @@ class PricingEntity
      * @param float $lastTradeValue
      * @return PricingEntity
      */
-    public function setLastTradeValue(float $lastTradeValue): PricingEntity
+    public function setLastTradeValue(float $lastTradeValue): self
     {
         $this->lastTradeValue = $lastTradeValue;
         return $this;
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getChangeInAmount(): float
+    public function getChangeInAmount()
     {
         return $this->changeInAmount;
     }
@@ -112,7 +119,7 @@ class PricingEntity
      * @param float $changeInAmount
      * @return PricingEntity
      */
-    public function setChangeInAmount(float $changeInAmount): PricingEntity
+    public function setChangeInAmount(float $changeInAmount): self
     {
         $this->changeInAmount = $changeInAmount;
         return $this;
@@ -130,7 +137,7 @@ class PricingEntity
      * @param float $changeInPercentage
      * @return PricingEntity
      */
-    public function setChangeInPercentage(float $changeInPercentage): PricingEntity
+    public function setChangeInPercentage(float $changeInPercentage): self
     {
         $this->changeInPercentage = $changeInPercentage;
         return $this;
@@ -150,7 +157,7 @@ class PricingEntity
      * @param float|null $highPrice
      * @return PricingEntity
      */
-    public function setHighPrice($highPrice)
+    public function setHighPrice(float $highPrice)
     {
         $this->highPrice = $highPrice;
         return $this;
@@ -170,7 +177,7 @@ class PricingEntity
      * @param float|null $lowPrice
      * @return PricingEntity
      */
-    public function setLowPrice($lowPrice)
+    public function setLowPrice(float $lowPrice)
     {
         $this->lowPrice = $lowPrice;
         return $this;

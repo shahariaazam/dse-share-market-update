@@ -1,74 +1,81 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * StockPriceTest class
  *
  * @package  ShahariaAzam\BDStockExchange\Tests
  */
 
-
 namespace ShahariaAzam\BDStockExchange\Tests;
 
-use Http\Message\StreamFactory\DiactorosStreamFactory;
-use Http\Mock\Client;
-use Nyholm\Psr7\Request;
 use Nyholm\Psr7\Response;
-use Nyholm\Psr7\Stream;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestInterface;
-use ShahariaAzam\BDStockExchange\PricingEntity;
 use ShahariaAzam\BDStockExchange\StockExchange\ChittagongStockExchange;
 use ShahariaAzam\BDStockExchange\StockExchange\DhakaStockExchange;
+use ShahariaAzam\BDStockExchange\StockExchangeInterface;
 use ShahariaAzam\BDStockExchange\StockPrice;
 
 class StockPriceTest extends TestCase
 {
-    private $dataDirectory;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->dataDirectory = dirname( __DIR__ ) . DIRECTORY_SEPARATOR . "data" . DIRECTORY_SEPARATOR;
-    }
-
-    public function testDSEStockPrice()
-    {
-        $dse = new DhakaStockExchange();
-
-        $stock = new StockPrice();
-        $stock->setHttpClient($this->buildHttpMockClient($this->dataDirectory . 'dse.html'));
-        $stock->setStockExchange($dse);
+    /**
+     * @dataProvider getDSEDataProvider
+     * @param StockExchangeInterface $stockExchange
+     * @param $companyCode
+     * @param $lastTradePrice
+     * @param $changeInAmount
+     * @param $changeInPercentage
+     * @param $highPrice
+     * @param $lowPrice
+     */
+    public function testDSEStockPrice(
+        StockExchangeInterface $stockExchange,
+        string $companyCode,
+        float $lastTradePrice,
+        $changeInAmount,
+        $changeInPercentage,
+        $highPrice,
+        $lowPrice
+    ) {
+        $stock = new StockPrice($stockExchange);
         $pricing = $stock->getPricing();
 
-        $this->assertIsArray($pricing);
-        $this->assertIsObject($pricing[0]);
-        $this->assertTrue($pricing[0] instanceof PricingEntity);
-        $this->assertEquals('1JANATAMF', $pricing[0]->getCompany());
-        $this->assertEquals(4.1, $pricing[0]->getLastTradeValue());
-        $this->assertEquals(0, $pricing[0]->getChangeInAmount());
-        $this->assertEquals(0, $pricing[0]->getChangeInPercentage());
-        $this->assertNull($pricing[0]->getHighPrice());
-        $this->assertNull($pricing[0]->getLowPrice());
+        $this->assertSame($companyCode, $pricing[0]->getCompany());
+        $this->assertSame($lastTradePrice, $pricing[0]->getLastTradeValue());
+        $this->assertEquals($changeInAmount, $pricing[0]->getChangeInAmount());
+        $this->assertEquals($changeInPercentage, $pricing[0]->getChangeInPercentage());
+        $this->assertEquals($highPrice, $pricing[0]->getHighPrice());
+        $this->assertEquals($lowPrice, $pricing[0]->getLowPrice());
     }
 
-    public function testCSEStockPrice()
+    public function getDSEDataProvider()
     {
-        $dse = new ChittagongStockExchange();
-
-        $stock = new StockPrice();
-        $stock->setHttpClient($this->buildHttpMockClient($this->dataDirectory . 'cse.html'));
-        $stock->setStockExchange($dse);
-        $pricing = $stock->getPricing();
-
-        $this->assertIsArray($pricing);
-        $this->assertIsObject($pricing[0]);
-        $this->assertTrue($pricing[0] instanceof PricingEntity);
-        $this->assertEquals('1JANATAMF', $pricing[0]->getCompany());
-        $this->assertEquals(4.1, $pricing[0]->getLastTradeValue());
-        $this->assertEquals(0, $pricing[0]->getChangeInAmount());
-        $this->assertNull($pricing[0]->getChangeInPercentage());
-        $this->assertEquals(4.1, $pricing[0]->getHighPrice());
-        $this->assertEquals(4.1, $pricing[0]->getLowPrice());
+        return [
+            'stock price for 1JANATAMF from DSE' => [
+                new DhakaStockExchange(
+                    $this->buildHttpMockClient(__DIR__ . '/../data/dse.html')
+                ),
+                '1JANATAMF',
+                4.1,
+                0,
+                0,
+                null,
+                null,
+            ],
+            'stock price for 1JANATAMF from CSE' => [
+                new ChittagongStockExchange(
+                    $this->buildHttpMockClient(__DIR__ . '/../data/cse.html')
+                ),
+                '1JANATAMF',
+                4.1,
+                0,
+                null,
+                4.1,
+                4.1,
+            ],
+        ];
     }
 
     /**

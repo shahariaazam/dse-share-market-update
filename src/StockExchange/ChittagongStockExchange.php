@@ -23,9 +23,12 @@
  * THE SOFTWARE.
  */
 
+declare(strict_types=1);
+
 namespace ShahariaAzam\BDStockExchange\StockExchange;
 
 use Nyholm\Psr7\Request;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use ShahariaAzam\BDStockExchange\PricingEntity;
 use ShahariaAzam\BDStockExchange\StockExchangeInterface;
@@ -33,6 +36,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ChittagongStockExchange implements StockExchangeInterface
 {
+    const PRICING_HTTP_ENDPOINT = 'https://www.dsebd.org';
+
     /**
      * @var ClientInterface
      */
@@ -43,81 +48,39 @@ class ChittagongStockExchange implements StockExchangeInterface
      */
     private $httpHeaders;
 
-    /**
-     * @var string
-     */
-    private $endpoint;
-
-    /**
-     * @var PricingEntity[]
-     */
-    private $pricing;
-
-    public function __construct()
-    {
-        $this->endpoint = "https://www.cse.com.bd/market/current_price";
-    }
-
-    /**
-     * @return StockExchangeInterface
-     */
-    public function fetchStockPrices()
-    {
-        $request = new Request('GET', $this->endpoint);
-        $response = $this->httpClient->sendRequest($request);
-        $dom = new Crawler((string) $response->getBody());
-
-        $stockDom = $dom->filterXPath("//*[@id=\"dataTable\"]/tbody/tr");
-
-        foreach ($stockDom as $node) {
-            $this->pricing[] = $this->cleanData($node->nodeValue);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setHttpClient(ClientInterface $client)
+    public function __construct(ClientInterface $client, array $httpHeaders = [])
     {
         $this->httpClient = $client;
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setHttpHeaders(array $headers = [])
-    {
-        $this->httpHeaders= $headers;
-        return $this;
+        $this->httpHeaders = $httpHeaders;
     }
 
     /**
      * @return PricingEntity[]
+     * @throws ClientExceptionInterface
      */
-    public function getPricing()
+    public function getPricing(): array
     {
-        return $this->pricing;
-    }
+        $response = $this->httpClient->sendRequest(
+            new Request('GET', self::PRICING_HTTP_ENDPOINT)
+        );
+        $dom = new Crawler((string)$response->getBody());
 
-    public function toArray()
-    {
-        if (count($this->pricing) < 1) {
-            return [];
+        $stockDom = $dom->filterXPath("//*[@id=\"dataTable\"]/tbody/tr");
+
+        $pricing = [];
+
+        foreach ($stockDom as $node) {
+            $pricing[] = $this->cleanData($node->nodeValue);
         }
 
-        return array_map(function (PricingEntity $entity) {
-            return $entity->toArray();
-        }, $this->pricing);
+        return $pricing;
     }
 
     /**
      * @param $data
      * @return PricingEntity
      */
-    protected function cleanData($data)
+    private function cleanData($data)
     {
         $data = utf8_decode($data);
         preg_match_all('([\w!\d+(?:.\d+)?!]+)', $data, $cleaned);
@@ -125,11 +88,21 @@ class ChittagongStockExchange implements StockExchangeInterface
         $pricingData = array_pop($cleaned);
 
         $pricingEntity = new PricingEntity();
-        $pricingEntity->setCompany($pricingData[1]);
-        $pricingEntity->setLastTradeValue((float) $pricingData[2]);
-        $pricingEntity->setHighPrice((float)$pricingData[4]);
-        $pricingEntity->setLowPrice((float)$pricingData[5]);
-        $pricingEntity->setChangeInAmount((float) $pricingData[6] - (float) $pricingData[2]);
+        $pricingEntity->setCompany((string)$pricingData[1]);
+        $pricingEntity->setLastTradeValue((float)$pricingData[2]);
+
+        if (isset($pricingData[4])) {
+            $pricingEntity->setHighPrice((float)$pricingData[4]);
+        }
+
+        if (isset($pricingData[5])) {
+            $pricingEntity->setLowPrice((float)$pricingData[5]);
+        }
+
+        if (isset($pricingData[6]) && isset($pricingData[2])) {
+            $pricingEntity->setChangeInAmount((float)$pricingData[6] - (float)$pricingData[2]);
+        }
+
         return $pricingEntity;
     }
 }
